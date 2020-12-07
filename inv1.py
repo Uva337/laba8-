@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+
+import sys
+
+
+if __name__ == '__main__':
+
+    people= []
+
+    while True:
+        command = input(">>> ").lower()
+
+        if command == 'exit':
+            break
+        elif command == 'add':
+            name = input("Фамилия, Имя: ")
+            num = int(input("Номер телефона: "))
+            year = input("Дата рождения: ")
+
+            peop = {
+                'name': name,
+                'num': num,
+                'year': year,
+            }
+
+            people.append(peop)
+            if len(people) > 1:
+                people.sort(key=lambda item: item.get('num', ''))
+
+        elif command == 'list':
+            line = '+-{}-+-{}-+-{}-+-{}-+'.format(
+                '-' * 4,
+                '-' * 30,
+                '-' * 20,
+                '-' * 17
+            )
+            print(line)
+            print(
+                '| {:^4} | {:^30} | {:^20} | {:^17} |'.format(
+                    "№",
+                    "Фамилия, Имя",
+                    "Номер телефона",
+                    "Дата рождения"
+                )
+            )
+            print(line)
+
+            for idx, peop in enumerate(people, 1):
+                print(
+                    '| {:>4} | {:<30} | {:<20} | {:>17} |'.format(
+                        idx,
+                        peop.get('name', ''),
+                        peop.get('num', ''),
+                        peop.get('year', 0)
+                    )
+                )
+
+            print(line)
+
+        elif command.startswith('select '):
+
+            parts = command.split(' ', maxsplit=2)
+
+            number = int(parts[1])
+
+            count = 0
+            for peop in people:
+                if peop.get('num') == number:
+                    count += 1
+                    print('Номер телефона:', peop.get('num', ''))
+                    print('Фамилия, Имя:', peop.get('name', ''))
+                    print('Дата рождения:', peop.get('year', ''))
+
+            if count == 0:
+                print("Таких людей нет")
+
+        elif command == 'help':
+            print("Список команд:\n")
+            print("add - добавить поезд;")
+            print("list - вывести список людей;")
+            print("select <номер телефона> - запросить информацию по номеру телефона;")
+            print("help - отобразить справку;")
+            print("exit - завершить работу с программой.")
+        else:
+            print(f"Неизвестная команда {command}", file=sys.stderr)
