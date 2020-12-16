@@ -21,7 +21,7 @@ if __name__ == '__main__':
         elif command == 'add':
             name = input("Фамилия, Имя: ")
             num = int(input("Номер телефона: "))
-            year = input("Дата рождения: ")
+            year = input("Дата рождения в формате дд:мм:гггг: ")
 
             peop = {
                 'name': name,
@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
             people.append(peop)
             if len(people) > 1:
-                people.sort(key=lambda item: item.get('num', ''))
+                people.sort(key=lambda item: item.get('num', '3'))
 
         elif command == 'list':
             line = '+-{}-+-{}-+-{}-+-{}-+'.format(
